@@ -1113,6 +1113,7 @@ Use the functions `saveRDS()` and `readRDS()`.
 
 ``` r
 saveRDS(fit_model, "exported_file.rds")
+
 readRDS(file="exported_file.rds")
 ```
 

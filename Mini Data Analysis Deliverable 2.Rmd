@@ -491,6 +491,7 @@ Write your model object from Task 3 to an R binary file (an RDS), and load it ag
 <!-------------------------- Start your work below ---------------------------->
 ```{r}
 saveRDS(fit_model, "exported_file.rds")
+
 readRDS(file="exported_file.rds")
 
 ```
