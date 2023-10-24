@@ -461,7 +461,6 @@ q2_graph <- ggplot(vancouver_trees, aes(longitude, latitude)) +
   coord_quickmap()
   
 print(q2_graph)
-
 ```
 In order to investigate research q#2, I first used the group_by function in order to find the count of all the genus’s in the data set. Thereafter I used the arrange function to find the most abundant tree. I then used the select and filter functions to create a new data set with the ACER genus name. Thereafter I tidied the data and created a graph with the ACER trees. Based on the graph, I can conclude that these trees are abundant all throughout Vancouver, therefore a singular area does not hold this genus of trees. 
 

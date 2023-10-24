@@ -983,7 +983,7 @@ data, one for each research question.)
 ### Investigating Updated Research Q#1
 
 ``` r
-#Dropping all columns except for date planted and tree diameter -> used select function
+#Dropping all columns except for species_name, date planted and tree diameter -> used select function
 q1 <-vancouver_trees %>% select(species_name, date_planted, diameter)
 print(q1)
 ```
@@ -1063,6 +1063,143 @@ category with year and tidied the existing dataset to remove NA.
 Thereafter,I created the q1 graph which represents the diameter per
 year, and it is evident thought he graph that in the late 90s and early
 2000s had the most tree growth.
+
+### Investigating Updated Research Q#2
+
+``` r
+#Determining genus counts -> used group_by function
+q2 <-vancouver_trees %>% group_by(genus_name) %>% summarise(n = n())
+print(q2)
+```
+
+    ## # A tibble: 97 × 2
+    ##    genus_name      n
+    ##    <chr>       <int>
+    ##  1 ABIES         190
+    ##  2 ACER        36062
+    ##  3 AESCULUS     2570
+    ##  4 AILANTHUS       4
+    ##  5 ALBIZIA         1
+    ##  6 ALNUS          74
+    ##  7 AMELANCHIER   226
+    ##  8 ARALIA          4
+    ##  9 ARAUCARIA      10
+    ## 10 ARBUTUS        10
+    ## # ℹ 87 more rows
+
+``` r
+#Determining genus with highest counts -> used arrange function
+q2_count <-arrange(q2, desc(n))
+print(q2_count)
+```
+
+    ## # A tibble: 97 × 2
+    ##    genus_name     n
+    ##    <chr>      <int>
+    ##  1 ACER       36062
+    ##  2 PRUNUS     30683
+    ##  3 FRAXINUS    7381
+    ##  4 TILIA       6773
+    ##  5 QUERCUS     6119
+    ##  6 CARPINUS    5806
+    ##  7 FAGUS       4808
+    ##  8 MALUS       4173
+    ##  9 MAGNOLIA    3899
+    ## 10 CRATAEGUS   3864
+    ## # ℹ 87 more rows
+
+``` r
+#Creating dataset with specific genus and other variables -> used select and filter function
+q2_filter <- vancouver_trees %>% select(longitude, latitude, genus_name) %>% filter(genus_name == "ACER")
+
+print(q2_filter)
+```
+
+    ## # A tibble: 36,062 × 3
+    ##    longitude latitude genus_name
+    ##        <dbl>    <dbl> <chr>     
+    ##  1     -123.     49.2 ACER      
+    ##  2     -123.     49.2 ACER      
+    ##  3     -123.     49.2 ACER      
+    ##  4     -123.     49.2 ACER      
+    ##  5     -123.     49.2 ACER      
+    ##  6     -123.     49.2 ACER      
+    ##  7     -123.     49.2 ACER      
+    ##  8     -123.     49.2 ACER      
+    ##  9     -123.     49.2 ACER      
+    ## 10     -123.     49.2 ACER      
+    ## # ℹ 36,052 more rows
+
+``` r
+#tidying data and removing NA -> tidied data 
+q2_tidy <- q2_filter %>%  drop_na()
+print(q2_tidy)
+```
+
+    ## # A tibble: 30,536 × 3
+    ##    longitude latitude genus_name
+    ##        <dbl>    <dbl> <chr>     
+    ##  1     -123.     49.2 ACER      
+    ##  2     -123.     49.2 ACER      
+    ##  3     -123.     49.2 ACER      
+    ##  4     -123.     49.2 ACER      
+    ##  5     -123.     49.2 ACER      
+    ##  6     -123.     49.2 ACER      
+    ##  7     -123.     49.2 ACER      
+    ##  8     -123.     49.2 ACER      
+    ##  9     -123.     49.2 ACER      
+    ## 10     -123.     49.2 ACER      
+    ## # ℹ 30,526 more rows
+
+``` r
+#Graphing to show correlation 
+q2_graph <- ggplot(vancouver_trees, aes(longitude, latitude)) + 
+  geom_point(size = .25, show.legend = FALSE) +
+  geom_point(data = q2_tidy, mapping = aes(x = longitude, y = latitude), colour = "red", size = .05)
+  coord_quickmap()
+```
+
+    ## <ggproto object: Class CoordQuickmap, CoordCartesian, Coord, gg>
+    ##     aspect: function
+    ##     backtransform_range: function
+    ##     clip: on
+    ##     default: FALSE
+    ##     distance: function
+    ##     expand: TRUE
+    ##     is_free: function
+    ##     is_linear: function
+    ##     labels: function
+    ##     limits: list
+    ##     modify_scales: function
+    ##     range: function
+    ##     render_axis_h: function
+    ##     render_axis_v: function
+    ##     render_bg: function
+    ##     render_fg: function
+    ##     setup_data: function
+    ##     setup_layout: function
+    ##     setup_panel_guides: function
+    ##     setup_panel_params: function
+    ##     setup_params: function
+    ##     train_panel_guides: function
+    ##     transform: function
+    ##     super:  <ggproto object: Class CoordQuickmap, CoordCartesian, Coord, gg>
+
+``` r
+print(q2_graph)
+```
+
+    ## Warning: Removed 22771 rows containing missing values (`geom_point()`).
+
+![](Mini-Data-Analysis-Deliverable-2_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+In order to investigate research q#2, I first used the group_by function
+in order to find the count of all the genus’s in the data set.
+Thereafter I used the arrange function to find the most abundant tree. I
+then used the select and filter functions to create a new data set with
+the ACER genus name. Thereafter I tidied the data and created a graph
+with the ACER trees. Based on the graph, I can conclude that these trees
+are abundant all throughout Vancouver, therefore a singular area does
+not hold this genus of trees.
 
 <!----------------------------------------------------------------------------->
 
