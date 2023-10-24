@@ -16,7 +16,6 @@ The second deliverable can be engaged with my loading the following datasets:
 1. install.packages("datateachr")
 2. install.packages("tidyverse")
 3. install.packages("broom")
-4. install.packages("readr")
 
 This deliverable did a further analysis of the four main research questions as written in mini data analysis deliverable 1.
 
