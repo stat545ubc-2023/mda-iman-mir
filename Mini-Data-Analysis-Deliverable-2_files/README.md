@@ -6,4 +6,3 @@ The following packages were used in this deliverable:
 1. install.packages("datateachr")
 2. install.packages("tidyverse")
 3. install.packages("broom")
-4. install.packages("readr")
