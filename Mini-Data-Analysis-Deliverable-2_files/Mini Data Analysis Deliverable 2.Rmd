@@ -534,9 +534,7 @@ Take a summary table that you made from Task 1, and write it as a csv file in yo
 
 <!-------------------------- Start your work below ---------------------------->
 ```{r}
-library(readr)
-write.csv(street_height_sum, "exported_file.csv")
-here::here()
+write.csv(street_height_sum, here::here("output/exported_file.csv"))
 ```
 
 <!----------------------------------------------------------------------------->
@@ -549,9 +547,9 @@ Write your model object from Task 3 to an R binary file (an RDS), and load it ag
 
 <!-------------------------- Start your work below ---------------------------->
 ```{r}
-saveRDS(fit_model, "exported_file.rds")
+saveRDS(fit_model, here::here("output/exported_file.rds"))
 
-readRDS(file="exported_file.rds")
+readRDS(file=here::here("output/exported_file.rds"))
 
 ```
 
