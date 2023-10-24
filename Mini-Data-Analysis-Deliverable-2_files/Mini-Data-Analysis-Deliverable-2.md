@@ -1316,12 +1316,8 @@ file in your `output` folder. Use the `here::here()` function.
 <!-------------------------- Start your work below ---------------------------->
 
 ``` r
-library(readr)
-write.csv(street_height_sum, "exported_file.csv")
-here::here()
+write.csv(street_height_sum, here::here("output/exported_file.csv"))
 ```
-
-    ## [1] "/Users/imanmir/mda-iman-mir"
 
 <!----------------------------------------------------------------------------->
 
@@ -1336,9 +1332,9 @@ Use the functions `saveRDS()` and `readRDS()`.
 <!-------------------------- Start your work below ---------------------------->
 
 ``` r
-saveRDS(fit_model, "exported_file.rds")
+saveRDS(fit_model, here::here("output/exported_file.rds"))
 
-readRDS(file="exported_file.rds")
+readRDS(file=here::here("output/exported_file.rds"))
 ```
 
     ## 
