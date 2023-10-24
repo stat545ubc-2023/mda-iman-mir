@@ -410,7 +410,7 @@ Now, try to choose a version of your data that you think will be appropriate to 
 <!--------------------------- Start your work below --------------------------->
 ### Investigating Updated Research Q#1
 ```{r}
-#Dropping all columns except for date planted and tree diameter -> used select function
+#Dropping all columns except for species_name, date planted and tree diameter -> used select function
 q1 <-vancouver_trees %>% select(species_name, date_planted, diameter)
 print(q1)
 
@@ -431,6 +431,39 @@ print(q1_graph)
 ```
 For the first updated research question I first dropped column I didn’t need using the select function to create the q1 variable. I then filtered tree with diameters above 9 as this was the median value found in the stat_species variable (in question 1.2). I then created a new category with year and tidied the existing dataset to remove NA. Thereafter,I created the q1 graph which represents the diameter per year, and it is evident thought he graph that in the late 90s and early 2000s had the most tree growth. 
 
+
+
+
+### Investigating Updated Research Q#2
+
+```{r}
+#Determining genus counts -> used group_by function
+q2 <-vancouver_trees %>% group_by(genus_name) %>% summarise(n = n())
+print(q2)
+
+#Determining genus with highest counts -> used arrange function
+q2_count <-arrange(q2, desc(n))
+print(q2_count)
+
+#Creating dataset with specific genus and other variables -> used select and filter function
+q2_filter <- vancouver_trees %>% select(longitude, latitude, genus_name) %>% filter(genus_name == "ACER")
+
+print(q2_filter)
+
+#tidying data and removing NA -> tidied data 
+q2_tidy <- q2_filter %>%  drop_na()
+print(q2_tidy)
+
+#Graphing to show correlation 
+q2_graph <- ggplot(vancouver_trees, aes(longitude, latitude)) + 
+  geom_point(size = .25, show.legend = FALSE) +
+  geom_point(data = q2_tidy, mapping = aes(x = longitude, y = latitude), colour = "red", size = .05)
+  coord_quickmap()
+  
+print(q2_graph)
+
+```
+In order to investigate research q#2, I first used the group_by function in order to find the count of all the genus’s in the data set. Thereafter I used the arrange function to find the most abundant tree. I then used the select and filter functions to create a new data set with the ACER genus name. Thereafter I tidied the data and created a graph with the ACER trees. Based on the graph, I can conclude that these trees are abundant all throughout Vancouver, therefore a singular area does not hold this genus of trees. 
 
 
 <!----------------------------------------------------------------------------->
