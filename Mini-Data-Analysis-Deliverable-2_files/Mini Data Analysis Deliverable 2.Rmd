@@ -408,6 +408,32 @@ Now, try to choose a version of your data that you think will be appropriate to 
 (If it makes more sense, then you can make/pick two versions of your data, one for each research question.) 
 
 <!--------------------------- Start your work below --------------------------->
+### Investigating Updated Research Q#1
+```{r}
+#Dropping all columns except for date planted and tree diameter -> used select function
+q1 <-vancouver_trees %>% select(species_name, date_planted, diameter)
+print(q1)
+
+#Filtering tree diameters above 9 -> used filter function
+q1_filter <-q1 %>% filter(diameter > 9)
+print(q1_filter)
+
+#Creating new variable only with year -> created new column
+q1_filter$year <- as.numeric(format(q1_filter$date_planted, "%Y"))
+
+#tidying data and removing NA -> tidied data 
+q1_tidy <- q1_filter %>%  drop_na()
+print(q1_tidy)
+
+#Graphing to show correlation 
+q1_graph <- q1_tidy %>% ggplot(aes(year, diameter)) + geom_point(alpha=0.8)
+print(q1_graph)
+```
+For the first updated research question I first dropped column I didn’t need using the select function to create the q1 variable. I then filtered tree with diameters above 9 as this was the median value found in the stat_species variable (in question 1.2). I then created a new category with year and tidied the existing dataset to remove NA. Thereafter,I created the q1 graph which represents the diameter per year, and it is evident thought he graph that in the late 90s and early 2000s had the most tree growth. 
+
+
+
+<!----------------------------------------------------------------------------->
 
 # Task 3: Modelling
 
@@ -477,7 +503,7 @@ Take a summary table that you made from Task 1, and write it as a csv file in yo
 <!-------------------------- Start your work below ---------------------------->
 ```{r}
 library(readr)
-write_csv(street_height_sum, "exported_file.csv")
+write.csv(street_height_sum, "exported_file.csv")
 here::here()
 ```
 
